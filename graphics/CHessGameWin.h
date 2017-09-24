@@ -48,7 +48,7 @@ typedef struct{
 	SDL_Texture* undoTexture;
 	SDL_Texture* mainmTexture;
 	SDL_Texture* exitTexture;
-	char status[10];
+	char stateMachine[10];
 
 	//chess* game;
 }SPGameWin;
