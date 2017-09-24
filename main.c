@@ -6,7 +6,12 @@
  *      Author: User
  */
 
+<<<<<<< HEAD
 //fuckkkkkkk
+=======
+
+//FUCK
+>>>>>>> master
 
 #include <SDL.h>
 #include <SDL_video.h>
