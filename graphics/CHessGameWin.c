@@ -58,6 +58,21 @@ int isClickOnExitG(int x, int y) {
 	return 0;
 }
 
+int isClickOnPiece(int x, int y, SPGameWin* src) {
+
+	for (int j=0;  j<SP_N_COLUMNS ; j++){
+	for (int i= 0; i< SP_N_ROWS  ; i++) {
+		if ((rec.x >= j*75  && rec.x =< (j*75 +75)) && (rec.y => i*75 && rec.x <= (j*75 +75))){
+			return (63- (i*8+j);
+		}
+	}
+	}
+
+
+	return 0;
+}
+
+
  void setPiece(SPGameWin* src, int i, int j, SDL_Rect rec)
  {
  	if (board[63- (i*8+j)] == 2000) {
@@ -470,6 +485,41 @@ SP_GAME_EVENT spGameWindowHandleEvent(SPGameWin* src, SDL_Event* event) {
 		return SP_GAME_EVENT_INVALID_ARGUMENT;
 	}
 	switch (event->type) {
+	            case SDL_MOUSEBUTTONDOWN:
+	            {
+	                if(event->button. == SDL_BUTTON_LEFT)
+	                {
+	                    if(stateMachine == Released)
+	                    {
+	                        // ... begin drawing
+	                        stateMachine = Dragging
+	                    }
+	                }
+	                break;
+	            }
+	            case SDL_MOUSEMOTION:
+	            {
+	                if(stateMachine == Dragging)
+	                {
+	                    // ... update the extends of your rect
+	                }
+	            }
+	            case SDL_MOUSEBUTTONUP:
+	            {
+	                if(Event.button.button == SDL_BUTTON_LEFT)
+	                {
+	                    if(stateMachine != Released)
+	                    {
+	                        // ... finalize drawing... add the rect to a list? flush it?
+	                        stateMachine = Released;
+	                    }
+	                }
+	            }
+	            case SDL_QUIT:
+	            {
+	                running = false;
+	                break;
+	            }
 	case SDL_MOUSEBUTTONUP:
 //		spTicTacToeSetMove(src->game, event->button.y / 200,
 //				event->button.x / 200);
