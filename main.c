@@ -7,6 +7,7 @@
  */
 
 
+//FUCK
 
 #include <SDL.h>
 #include <SDL_video.h>
