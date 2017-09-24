@@ -59,17 +59,16 @@ int isClickOnExitG(int x, int y) {
 }
 
 int isClickOnPiece(int x, int y, SPGameWin* src) {
-
-	for (int j=0;  j<SP_N_COLUMNS ; j++){
-	for (int i= 0; i< SP_N_ROWS  ; i++) {
-		if ((rec.x >= j*75  && rec.x =< (j*75 +75)) && (rec.y => i*75 && rec.x <= (j*75 +75))){
-			return (63- (i*8+j);
+	int index;
+	for (int j=0;  j<8 ; j++){
+	for (int i= 0; i< 8  ; i++) {
+		if ((x >= j*75  && x >= (j*75 +75)) && (y >= i*75 && y <= (j*75 +75))){
+			index =  (63-(i*8+j));
+			  return index;
 		}
 	}
 	}
-
-
-	return 0;
+	return -1;
 }
 
 
@@ -487,7 +486,7 @@ SP_GAME_EVENT spGameWindowHandleEvent(SPGameWin* src, SDL_Event* event) {
 	switch (event->type) {
 	            case SDL_MOUSEBUTTONDOWN:
 	            {
-	                if(event->button. == SDL_BUTTON_LEFT)
+	                if(event->button.button == SDL_BUTTON_LEFT)
 	                {
 	                    if(stateMachine == Released)
 	                    {
@@ -514,12 +513,6 @@ SP_GAME_EVENT spGameWindowHandleEvent(SPGameWin* src, SDL_Event* event) {
 	                        stateMachine = Released;
 	                    }
 	                }
-	            }
-	            case SDL_QUIT:
-	            {
-	                running = false;
-	                break;
-	            }
 	case SDL_MOUSEBUTTONUP:
 //		spTicTacToeSetMove(src->game, event->button.y / 200,
 //				event->button.x / 200);
