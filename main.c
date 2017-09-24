@@ -22,7 +22,7 @@ int main(int argc, char** argv){
 			printf("ERROR: unable to init SDL: %s\n", SDL_GetError());
 			return 1;
 		}
-		initialize(board);
+
 		SPGuiManager* manager = spManagerCreate();
 		if (manager == NULL ) {
 			SDL_Quit();

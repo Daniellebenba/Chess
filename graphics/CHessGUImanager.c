@@ -200,6 +200,8 @@ SP_MANAGER_EVENET handleManagerDueToGameEvent(SPGuiManager* src,
 //	spMainWindowShow(src->mainWin);
 	return SP_MANAGER_NONE;
 }
+
+
 SP_LOAD_GAMES_EVENT handleManagerDueToLoadEvent(SPGuiManager* src, //need to write
 		SP_LOAD_GAMES_EVENT event) {
 	if (src == NULL ) {
@@ -232,10 +234,17 @@ SP_LOAD_GAMES_EVENT handleManagerDueToLoadEvent(SPGuiManager* src, //need to wri
 	}
 	return SP_MANAGER_NONE;}
 
+
 SP_GAME_MODE_EVENT handleManagerDueToSetModeEvent(SPGuiManager* src, //need to write
 		SP_GAME_MODE_EVENT event) {
 	if (src == NULL ) {
 		return SP_MANAGER_NONE;
+	}
+	if (src == SP_MODE_PLAYER_1){
+		set_game_mode(1);
+	}
+	if (src == SP_MODE_PLAYER_2){
+		set_game_mode(2);
 	}
 	if (event == SP_GAME_MODE_NEXT) {
 		spGameModeWindowHide(src->setModeWin);
@@ -276,10 +285,23 @@ SP_GAME_MODE_EVENT handleManagerDueToSetModeEvent(SPGuiManager* src, //need to w
 	}
 	return SP_MANAGER_NONE;}
 
+
 SP_GAME_MODE_EVENT handleManagerDueToSetLevelEvent(SPGuiManager* src, //need to write
 		SP_LOAD_GAMES_EVENT event) {
 	if (src == NULL ) {
 		return SP_MANAGER_NONE;
+	}
+	if (event == SP_GAME_SET_LEVEL_1){
+		set_level(1);
+	}
+	if (event == SP_GAME_SET_LEVEL_2){
+		set_level(2);
+	}
+	if (event == SP_GAME_SET_LEVEL_3){
+		set_level(3);
+	}
+	if (event == SP_GAME_SET_LEVEL_4){
+		set_level(4);
 	}
 	if (event == SP_GAME_SET_LEVEL_NEXT) {
 		spGameSetLevelWindowHide(src->setLevelWin);
@@ -301,19 +323,22 @@ SP_GAME_MODE_EVENT handleManagerDueToSetLevelEvent(SPGuiManager* src, //need to 
 			}
 			src->activeWin = SP_MAIN_WINDOW_ACTIVE;
 	}
-	if (event == SP_MODE_PLAYER_1) {
-
-		//return SP_MANAGER_QUTT;
-	}
 	if (event == SP_GAME_SET_LEVEL_EXIT) {
 		return SP_MANAGER_QUTT;
 	}
 	return SP_MANAGER_NONE;}
 
+
 SP_GAME_SET_COLOR_EVENT handleManagerDueToSetColorEvent(SPGuiManager* src, //need to write
 		SP_GAME_SET_COLOR_EVENT event) {
 	if (src == NULL ) {
 		return SP_MANAGER_NONE;
+	}
+	if (event == SP_GAME_SET_COLOR_BLACK){
+		set_color(1);
+	}
+	if (event == SP_GAME_SET_COLOR_WHITE){
+		set_color(0);
 	}
 	if (event == SP_GAME_SET_COLOR_START) {
 		spGameSetLevelWindowHide(src->setColorWin);
@@ -334,10 +359,6 @@ SP_GAME_SET_COLOR_EVENT handleManagerDueToSetColorEvent(SPGuiManager* src, //nee
 				return SP_MANAGER_QUTT;
 			}
 			src->activeWin = SP_MAIN_WINDOW_ACTIVE;
-	}
-	if (event == SP_MODE_PLAYER_1) {
-
-		//return SP_MANAGER_QUTT;
 	}
 	if (event == SP_GAME_SET_COLOR_EXIT) {
 		return SP_MANAGER_QUTT;

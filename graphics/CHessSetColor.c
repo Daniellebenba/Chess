@@ -258,11 +258,9 @@ SP_GAME_SET_COLOR_EVENT spGameSetColorlWindoHandleEvent(SPsetColorWin* src, SDL_
 	}
 	switch (event->type) {
 	case SDL_MOUSEBUTTONUP:
-
 		if ((isClickOnColor(event->button.x, event->button.y)==1)&&(src->bold!=1)) { //black
 			inactive_color(src);
 			src->bold=1;
-			//slot button
 			SDL_Surface* loadingSurface = SDL_LoadBMP("./graphics/images/black_active.bmp");
 			if (loadingSurface == NULL ) {
 			spGameSetColorWindowDestroy(src);

@@ -8,7 +8,8 @@
 #ifndef GRAPHICS_CHESSGAMEWIN_H_
 #define GRAPHICS_CHESSGAMEWIN_H_
 #include "CHessWin.h"
-#include "../CHessGame.h"
+#include "CHessGameManager.h"
+//#include "../CHessGame.h"
 
 typedef enum {
 	SP_GAME_EVENT_X_WON,

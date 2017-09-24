@@ -102,6 +102,7 @@ int isClickOnExitG(int x, int y) {
  	}
  	return;
  }
+
  SDL_Texture* setPic(SPGameWin* src, char* path){
 	SDL_Surface* loadingSurface = NULL;
 	loadingSurface = SDL_LoadBMP(path );
@@ -418,6 +419,7 @@ void spGameWindowDraw(SPGameWin* src) {
 	if(src == NULL){
 		return;
 	}
+	initialize(board);
 	SDL_Rect rec = { .x = 0, .y = 0, .w = 600, .h = 600 };
 	SDL_Rect menu= { .x = 600, .y = 0, .w = 200, .h = 600 };
 	SDL_Rect restart = { .x = 625, .y = 50, .w = 150, .h = 50 };
@@ -478,6 +480,12 @@ SP_GAME_EVENT spGameWindowHandleEvent(SPGameWin* src, SDL_Event* event) {
 //			return SP_GAME_EVENT_O_WON;
 //		} else if (spTicTacToeIsGameOver(src->game)) {
 //			return SP_GAME_EVENT_TIE;
+//		}
+//		if (isMovePiece()){
+//			if(get_move(event->button.x,event->button.y)){
+//				updateWinBoard(event->button.x,event->button.y);
+//				after_move();
+//			}
 //		}
 		if (isClickOnRestart(event->button.x, event->button.y)){
 			return SP_GAME_RESTART;

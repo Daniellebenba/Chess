@@ -1,7 +1,7 @@
 /*
  * mediator.h
  *
- *  Created on: 26 АЮЕБв 2017
+ *  Created on: 26 ׀�׀®׀•׀‘׀² 2017
  *      Author: User
  */
 #include "CHessGame.h"
@@ -55,6 +55,8 @@ int moveBishop(int x, int y);
 int moveRook(int x, int y);
 int computer_move();
 void setting_state();
+
+int CheckMateOrTie(int turn);
 
 int** options(int turn, int board[]);
 void copyBoard(int board[], int copyOf[]);

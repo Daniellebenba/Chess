@@ -1576,7 +1576,7 @@ int game(){
 //		one_player=0; //2-players mode
 //	}
 	//int endgame=0;
-	int turn=0; //starts always with white color (notice that 1 suppose represent white color.)
+	current_player=0; //starts always with white color (notice that 1 suppose represent white color.)
 	int move=0;
 	int error=0;
 	char moveComm[1024];
@@ -1589,17 +1589,17 @@ int game(){
 		if (!error){
 			printBoard(board);
 		}
-		if((turn==0 && game_mode==2) || (turn==0 && game_mode==1 && game_color==1)){ //white: 2-players or 1-player and
+		if((current_player==0 && game_mode==2) || (current_player==0 && game_mode==1 && game_color==1)){ //white: 2-players or 1-player and
 			printf("white player - enter your move:\n");						//the user has white color and it his turn.
 		}
-		else if ((turn==1 && game_mode==2) || (turn==1 && game_mode==1 && game_color==0)){ //black: 2-players or 1-player and
+		else if ((current_player==1 && game_mode==2) || (current_player==1 && game_mode==1 && game_color==0)){ //black: 2-players or 1-player and
 			printf("white player - enter your move:\n");						//the user has black color and it his turn.
 			printf("black player - enter your move:\n");
 		}
-		else if ((turn==0 && game_mode==1 && game_color==0) || (turn==1 && game_mode==1 && game_color==1)){ //1-player and it's
+		else if ((current_player==0 && game_mode==1 && game_color==0) || (current_player==1 && game_mode==1 && game_color==1)){ //1-player and it's
 			printf("computer_move call\n");
-			computer_move(turn);							//white's turn and the computer has white color or it's black's
-			turn = !turn;									//turn and the computer has black color.
+			computer_move(current_player);							//white's turn and the computer has white color or it's black's
+			current_player = !current_player;									//turn and the computer has black color.
 			continue;
 		}
 		fflush(stdout);
@@ -1616,7 +1616,7 @@ int game(){
 			continue;
 		}
 		else if (command.cmd == CH_save &&( command.validArg =1)){
-			saveFile(getFileName(command.str_path), turn,  game_mode,  game_difficulty,  game_color,  board);
+			saveFile(getFileName(command.str_path), current_player,  game_mode,  game_difficulty,  game_color,  board);
 		}
 		else if (command.cmd == CH_reset){
 			printf("Restarting...\n");
@@ -1636,8 +1636,8 @@ int game(){
 				error=1;
 				continue;
 			}
-			undo(!turn);
-			undo(turn);
+			undo(!current_player);
+			undo(current_player);
 
 		}
 		else if (command.cmd == CH_move){ //move
@@ -1653,7 +1653,7 @@ int game(){
 			int comb_x =8*x1+y1;
 			int comb_y =8*x2+y2;
 			printf("x1: %d, x2: %d, y1: %d, y2: %d\n", x1,x2,y1,y2);
-			if (turn==0 ){ //white
+			if (current_player==0 ){ //white
 				if(board[comb_x]==0||board[comb_x]==2000||(int)(board[comb_x]/10)==2){
 					printf("The specified position does not contain your piece\n");
 					error=1;
@@ -1670,14 +1670,14 @@ int game(){
 			int piece=board[comb_x];
 				printf("from: %d\n",comb_x);
 				printf("to: %d\n",comb_y);
-			move = manage_move(turn,comb_x,comb_y,piece);
+			move = manage_move(current_player,comb_x,comb_y,piece);
 			if (move == 0){
 				printf("Illegal move\n");
 				error=1;
 				continue;
 			}
-			if (CheckMateOrTie(!turn)==1){ //a checkmate
-				if (turn==0){ //white
+			if (CheckMateOrTie(!current_player)==1){ //a checkmate
+				if (current_player==0){ //white
 					printf("Checkmate! white player wins the game\n");
 					return 0;
 
@@ -1688,33 +1688,33 @@ int game(){
 				}
 				return 0;
 			}
-			else if (CheckMateOrTie(!turn)==0){ //a tie
+			else if (CheckMateOrTie(!current_player)==0){ //a tie
 				printf("The game is tied\n");
 				return 0;
 			}
-			if (turn==0 && game_mode==2){ //was white's turn in 2-players mode
-				if (checkBoard(turn, white[15][1],board)){ //there is a check
+			if (current_player==0 && game_mode==2){ //was white's turn in 2-players mode
+				if (checkBoard(current_player, white[15][1],board)){ //there is a check
 					printf("Check: black King is threatend!\n");
 				}
 			}
-			else if (turn==1 && game_mode==2){ //was black's turn in 2-players mode
-				if (checkBoard(turn, black[15][1], board)){ //there is a check
+			else if (current_player==1 && game_mode==2){ //was black's turn in 2-players mode
+				if (checkBoard(current_player, black[15][1], board)){ //there is a check
 					printf("Check: white King is threatend!\n");
 				}
 			}
-			else if (turn==0 && game_mode==1 && game_color==0){ //1-player mode and it was the computer turn that has white color
-				if (checkBoard(turn, white[15][1],board)){ //there is a check
+			else if (current_player==0 && game_mode==1 && game_color==0){ //1-player mode and it was the computer turn that has white color
+				if (checkBoard(current_player, white[15][1],board)){ //there is a check
 					printf("Check!\n");
 				}
 			}
-			else if (turn==1 && game_mode==1 && game_color==1){ //1-player mode and it was the computer turn that has black color
-				if (checkBoard(turn, black[15][1],board)){ //there is a check
+			else if (current_player==1 && game_mode==1 && game_color==1){ //1-player mode and it was the computer turn that has black color
+				if (checkBoard(current_player, black[15][1],board)){ //there is a check
 					printf("Check!\n");
 				}
 			}
 			printf("moves[%d][0]=%d,moves[%d][1]=%d,moves[%d][2]=%d,moves[%d][3]=%d\n",cnt,moves[cnt][0],cnt,moves[cnt][1],cnt,moves[cnt][2],cnt,moves[cnt][3]);//test
-			turn = !turn;
-			printf("turn now is: %d\n", turn); //for test
+			current_player = !current_player;
+			printf("turn now is: %d\n", current_player); //for test
 			error=0;
 			}
 		}
