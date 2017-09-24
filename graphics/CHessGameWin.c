@@ -482,8 +482,8 @@ SP_GAME_EVENT spGameWindowHandleEvent(SPGameWin* src, SDL_Event* event) {
 //			return SP_GAME_EVENT_TIE;
 //		}
 //		if (isMovePiece()){
-//			if(get_move(event->button.x,event->button.y)){
-//				updateWinBoard(event->button.x,event->button.y);
+//			if(get_move(event->button.x,event->button.y, tx,ty)){
+//				updateWinBoard(event->button.x,event->button.y, tx, ty);
 //				after_move();
 //			}
 //		}

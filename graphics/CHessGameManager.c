@@ -65,11 +65,9 @@ int after_move(){
 			int new_pos = moves[last_move][2];	//new position
 			int fx = position/8 +1;
 			int fy = position%8;
-			char char_fy = intToCharCol(fy);
 			int tx = new_pos/8 +1;
 			int ty = new_pos%8;
-			char char_ty = intToCharCol(ty);//white's turn and the computer has white color or it's black's
-			current_player = !current_player;									//turn and the computer has black color.
+			current_player = !current_player;
 		}
 	return 0;
 }
