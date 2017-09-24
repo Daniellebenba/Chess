@@ -13,9 +13,9 @@
  * if the move is legal update the game board.
  * return 1 if the move is valid and 0 otherwise.
  */
-int get_move(int x,int y);
+int get_move(int fx, int fy, int tx, int ty);
 
-void updateWinBoard(int x, int y);
+void updateWinBoard(int fx, int fy,int tx, int ty);
 
 int after_move();
 
