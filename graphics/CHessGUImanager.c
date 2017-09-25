@@ -57,6 +57,7 @@ void spManagerDestroy(SPGuiManager* src) {
 	spMainWindowDestroy(src->mainWin);
 	free(src);
 }
+
 //void spManagerDraw(SPGuiManager* src) {
 //	if (!src) {
 //		return;
@@ -178,23 +179,23 @@ SP_MANAGER_EVENET handleManagerDueToGameEvent(SPGuiManager* src,
 		}
 		src->activeWin = SP_MAIN_WINDOW_ACTIVE;
 	}
-	if (event == SP_GAME_EVENT_QUIT) {
-		return SP_MANAGER_QUTT;
-	}
-	if (event == SP_GAME_EVENT_X_WON) {
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Game over", "X won",
-				NULL );
-	} else if (event == SP_GAME_EVENT_O_WON) {
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Game over", "O won",
-				NULL );
-	} else if (event == SP_GAME_EVENT_TIE) {
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Game over",
-				"it's a tie", NULL );
-	}
-	if (event == SP_GAME_EVENT_QUIT) {
-		return SP_MANAGER_QUTT;
-	}
-//	spGameWindowDestroy(src->gameWin);
+//	if (event == SP_GAME_EVENT_QUIT) {
+//		return SP_MANAGER_QUTT;
+//	}
+//	if (event == SP_GAME_EVENT_X_WON) {
+//		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Game over", "X won",
+//				NULL );
+//	} else if (event == SP_GAME_EVENT_O_WON) {
+//		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Game over", "O won",
+//				NULL );
+//	} else if (event == SP_GAME_EVENT_TIE) {
+//		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Game over",
+//				"it's a tie", NULL );
+//	}
+//	if (event == SP_GAME_EVENT_QUIT) {
+//		return SP_MANAGER_QUTT;
+//	}
+////	spGameWindowDestroy(src->gameWin);
 //	src->gameWin = NULL;
 //	src->activeWin = SP_GAME_WINDOW_ACTIVE;
 //	spMainWindowShow(src->mainWin);
@@ -395,7 +396,7 @@ SP_MANAGER_EVENET spManagerHandleEvent(SPGuiManager* src, SDL_Event* event)
 		}
 		else {
 			SP_GAME_EVENT gameEvent = spGameWindowHandleEvent(src->gameWin, event);
-			//spManagerDraw(src);
+			spManagerDraw(src);
 			return handleManagerDueToGameEvent(src, gameEvent);
 		}
 		return SP_MANAGER_NONE;

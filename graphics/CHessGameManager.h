@@ -8,14 +8,15 @@
 #ifndef GRAPHICS_CHESSGAMEMANAGER_H_
 #define GRAPHICS_CHESSGAMEMANAGER_H_
 #include "../CHessGame.h"
+//#include "CHessGameWin.h"
 /**
  * arg: gets the position move that was made by user.
  * if the move is legal update the game board.
  * return 1 if the move is valid and 0 otherwise.
  */
-int get_move(int fx, int fy, int tx, int ty);
+int get_move(int from, int to);
 
-void updateWinBoard(int fx, int fy,int tx, int ty);
+
 
 int after_move();
 

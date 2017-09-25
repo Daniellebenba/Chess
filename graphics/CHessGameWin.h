@@ -9,7 +9,7 @@
 #define GRAPHICS_CHESSGAMEWIN_H_
 #include "CHessWin.h"
 #include "CHessGameManager.h"
-//#include "../CHessGame.h"
+#include "../CHessGame.h"
 
 typedef enum {
 	SP_GAME_EVENT_X_WON,
@@ -28,12 +28,12 @@ typedef enum {
 typedef struct{
 	SDL_Window* window;
 	SDL_Renderer* renderer;
-	SDL_Texture* bgTexture;
+	SDL_Surface* bgTexture;
 	SDL_Texture* menuTexture;
 	SDL_Texture* kingbTexture;
 	SDL_Texture* kingwTexture;
 	SDL_Texture* queenbTexture;
-	SDL_Texture* queewTexture;
+	SDL_Texture* queenwTexture;
 	SDL_Texture* rookbTexture;
 	SDL_Texture* rookwTexture;
 	SDL_Texture* knightbTexture;
@@ -48,7 +48,10 @@ typedef struct{
 	SDL_Texture* undoTexture;
 	SDL_Texture* mainmTexture;
 	SDL_Texture* exitTexture;
-	char stateMachine[10];
+
+	int stateMachine; //0 dragging, 1 released
+	int from;
+	int to;
 
 	//chess* game;
 }SPGameWin;
@@ -59,4 +62,7 @@ void spGameWindowDestroy(SPGameWin*);
 SP_GAME_EVENT spGameWindowHandleEvent(SPGameWin* src, SDL_Event* event);
 int isClickOnLoadG(int x, int y);
 void spGameWindowHide(SPGameWin* src);
+
+void updateWinBoard(SPGameWin* src, int piece, int fx, int fy,int tx, int ty);
+
 #endif

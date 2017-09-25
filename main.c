@@ -6,12 +6,7 @@
  *      Author: User
  */
 
-<<<<<<< HEAD
-//fuckkkkkkk
-=======
 
-//FUCK
->>>>>>> master
 
 #include <SDL.h>
 #include <SDL_video.h>
@@ -35,12 +30,13 @@ int main(int argc, char** argv){
 		}
 		SDL_Event event;
 		while (1) {
-			SDL_WaitEvent(&event);
+			while (SDL_PollEvent(&event)){
 			if (spManagerHandleEvent(manager, &event) == SP_MANAGER_QUTT) {
 				break;
 			}
 			spManagerDraw(manager);
-
+			SDL_Delay(1000/60);
+			}
 		}
 		spManagerDestroy(manager);
 		SDL_Quit();

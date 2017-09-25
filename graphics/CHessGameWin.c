@@ -11,6 +11,65 @@
 
 
 
+/**
+ * args a game window, starting position and next position
+ * update the board in gameWin
+ */
+void updateWinBoard(SPGameWin* src, int piece, int fx, int fy,int tx, int ty){
+//	SDL_Rect curr_rec = { .x = fx, .y = fy, .w = 75, .h = 75 };
+//	SDL_RenderCopy(src->renderer, src->pawnwTexture, NULL, &curr_rec);
+	SDL_Rect rec = { .x = tx, .y = ty, .w = 75, .h = 75 };
+	printf("here\n");
+	switch (piece){
+	//pawn
+	case (11): //white
+		SDL_RenderCopy(src->renderer, src->pawnwTexture, NULL, &rec);
+	break;
+	case (21):
+		SDL_RenderCopy(src->renderer, src->pawnbTexture, NULL, &rec);
+	break;
+	//knight
+	case (13):
+		SDL_RenderCopy(src->renderer, src->knightwTexture, NULL, &rec);
+	break;
+	case (23):
+		SDL_RenderCopy(src->renderer, src->knightbTexture, NULL, &rec);
+	break;
+	//bishop
+	case (14):
+		SDL_RenderCopy(src->renderer, src->bishopwTexture, NULL, &rec);
+	break;
+	case (24):
+		SDL_RenderCopy(src->renderer, src->bishopbTexture, NULL, &rec);
+	break;
+	//rook
+	case (15):
+		SDL_RenderCopy(src->renderer, src->rookwTexture, NULL, &rec);
+	break;
+	case (25):
+		SDL_RenderCopy(src->renderer, src->rookbTexture, NULL, &rec);
+	break;
+	//queen
+	case (19):
+		SDL_RenderCopy(src->renderer, src->queenwTexture, NULL, &rec);
+	break;
+	case (29):
+		SDL_RenderCopy(src->renderer, src->queenbTexture, NULL, &rec);
+	break;
+	//king
+	case (1000):
+		SDL_RenderCopy(src->renderer, src->kingwTexture, NULL, &rec);
+	break;
+	case (2000):
+		SDL_RenderCopy(src->renderer, src->kingbTexture, NULL, &rec);
+	break;
+	}
+	SDL_RenderPresent(src->renderer);
+
+
+}
+
+
 int isClickOnRestart(int x, int y) {
 	if ((x >= 625 && x <= 775) && (y >= 50 && y <= 100)) {
 		return 1;
@@ -62,7 +121,7 @@ int isClickOnPiece(int x, int y, SPGameWin* src) {
 	int index;
 	for (int j=0;  j<8 ; j++){
 	for (int i= 0; i< 8  ; i++) {
-		if ((x >= j*75  && x >= (j*75 +75)) && (y >= i*75 && y <= (j*75 +75))){
+		if ((x >= j*75  && x <= (j*75 +75)) && (y >= i*75 && y <= (j*75 +75))){
 			index =  (63-(i*8+j));
 			  return index;
 		}
@@ -91,7 +150,7 @@ int isClickOnPiece(int x, int y, SPGameWin* src) {
  		SDL_RenderCopy(src->renderer, src->queenbTexture, NULL, &rec);
  	}
  	else if (board[63 -(i*8+j)] == 19) {
- 		SDL_RenderCopy(src->renderer, src->queewTexture, NULL, &rec);
+ 		SDL_RenderCopy(src->renderer, src->queenwTexture, NULL, &rec);
  	}
  	if (board[63-(i*8+j)] == 25) {
 
@@ -327,8 +386,8 @@ SPGameWin* spGameWindowCreate() {
 			spGameWindowDestroy(res);
 			return NULL ;
 		}
-	res->queewTexture =  setPic(res, "./graphics/images/queenw.bmp");
-		if (res->queewTexture == NULL ) {
+	res->queenwTexture =  setPic(res, "./graphics/images/queenw.bmp");
+		if (res->queenwTexture == NULL ) {
 			printf("Could not create a texture: %s\n", SDL_GetError());
 			spGameWindowDestroy(res);
 			return NULL ;
@@ -389,8 +448,8 @@ void spGameWindowDestroy(SPGameWin* src) {
 	if (src->bishopbTexture != NULL ) {
 		SDL_DestroyTexture(src->bishopbTexture);
 	}
-	if (src->queewTexture != NULL ) {
-		SDL_DestroyTexture(src->queewTexture);
+	if (src->queenwTexture != NULL ) {
+		SDL_DestroyTexture(src->queenwTexture);
 	}
 	if (src->queenbTexture != NULL ) {
 		SDL_DestroyTexture(src->queenbTexture);
@@ -442,7 +501,7 @@ void spGameWindowDraw(SPGameWin* src) {
 	SDL_Rect undo = { .x = 625, .y = 275, .w = 150, .h = 50 };
 	SDL_Rect mainm = { .x = 625, .y = 425, .w = 150, .h = 50 };
 	SDL_Rect exit = { .x = 625, .y = 500, .w = 150, .h = 50 };
-	SDL_SetRenderDrawColor(src->renderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(src->renderer, 255, 255, 255, 255); //maybe need to delete 2 lines???
 	SDL_RenderClear(src->renderer);
 	SDL_RenderCopy(src->renderer, src->menuTexture, NULL, &menu);
 	SDL_RenderCopy(src->renderer, src->bgTexture, NULL, &rec);
@@ -484,36 +543,56 @@ SP_GAME_EVENT spGameWindowHandleEvent(SPGameWin* src, SDL_Event* event) {
 		return SP_GAME_EVENT_INVALID_ARGUMENT;
 	}
 	switch (event->type) {
-	            case SDL_MOUSEBUTTONDOWN:
-	            {
-	                if(event->button.button == SDL_BUTTON_LEFT)
-	                {
-	                    if(stateMachine == Released)
-	                    {
-	                        // ... begin drawing
-	                        stateMachine = Dragging
-	                    }
-	                }
-	                break;
-	            }
-	            case SDL_MOUSEMOTION:
-	            {
-	                if(stateMachine == Dragging)
-	                {
-	                    // ... update the extends of your rect
-	                }
-	            }
-	            case SDL_MOUSEBUTTONUP:
-	            {
-	                if(Event.button.button == SDL_BUTTON_LEFT)
-	                {
-	                    if(stateMachine != Released)
-	                    {
-	                        // ... finalize drawing... add the rect to a list? flush it?
-	                        stateMachine = Released;
-	                    }
-	                }
+    case SDL_MOUSEBUTTONDOWN:
+    	src->from = isClickOnPiece(event->button.x,  event->button.y, src) ;
+   // break;
+//    {
+//        if(event->button.button == SDL_BUTTON_LEFT)
+//        {
+//            int square = isClickOnPiece( event->button.x,  event->button.y, src) ;
+//        	if(src->stateMachine == 1 && square!= -1 ) // is released
+//            {
+//        		src->from = square;
+//        		if (board[square]!= 0){
+//        			src->stateMachine = 0;
+//            }
+//        }
+//
+//    }
+//        break;
+//    }
+//    case SDL_MOUSEMOTION:
+//    {
+//        if(src->stateMachine ==0)
+//        {
+//        	SDL_Rect rec = { .x = 50, .y = 50, .w = 75, .h = 75 };
+//        	setPiece(src, src->from,  rec);
+//        	SDL_RenderPresent(src->renderer);
+//
+//        }
+//    }
+//    break;
+//    case SDL_MOUSEBUTTONUP:
+//    {
+//        if(event->button.button == SDL_BUTTON_LEFT)
+//        {
+//            if(src->stateMachine == 0 )
+//            {
+//                // ... finalize drawing... add the rect to a list? flush it?
+//            	src->stateMachine = 1;
+//            }
+//        }
+//        break;
+//    }
+
+
+
 	case SDL_MOUSEBUTTONUP:
+		 src->to = isClickOnPiece(event->button.x,  event->button.y, src) ;
+		 src->stateMachine = get_move(src->from, src->to);
+		 if (src->stateMachine){
+			 spGameWindowDraw(src);
+		 }
 //		spTicTacToeSetMove(src->game, event->button.y / 200,
 //				event->button.x / 200);
 //		char winner = spTicTacToeCheckWinner(src->game);
@@ -526,7 +605,13 @@ SP_GAME_EVENT spGameWindowHandleEvent(SPGameWin* src, SDL_Event* event) {
 //		}
 //		if (isMovePiece()){
 //			if(get_move(event->button.x,event->button.y, tx,ty)){
-//				updateWinBoard(event->button.x,event->button.y, tx, ty);
+//		int position = moves[last_move][1]; //old position
+//		int new_pos = moves[last_move][2];	//new position
+//		int fx = position/8 +1;
+//		int fy = position%8;
+//		int tx = new_pos/8 +1;
+//		int ty = new_pos%8;
+//		updateWinBoard(src, fx, fy, tx, ty);
 //				after_move();
 //			}
 //		}
@@ -534,6 +619,7 @@ SP_GAME_EVENT spGameWindowHandleEvent(SPGameWin* src, SDL_Event* event) {
 			return SP_GAME_RESTART;
 		}
 		if (isClickOnSave(event->button.x, event->button.y)){
+
 			return SP_GAME_SAVE;
 		}
 		if (isClickOnLoadG(event->button.x, event->button.y)){
